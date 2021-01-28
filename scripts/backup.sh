@@ -23,8 +23,6 @@ echo "Running MC force save"
 mcrcon -H $MC_SERVER -P $MC_RCON_PORT -p $MC_RCON_PWD save-all
 
 echo "Creating ZIP archive of world snapshot"
-# Zip
-#echo "zip -r $BACKUP_TO/$BACKUP_FILENAME $BACKUP_FROM -x cache/*"
 zip -r -dc -9 $BACKUP_TO/$BACKUP_FILENAME $BACKUP_FROM -x cache/ cache/*
 
 echo "Renabling MC automatic save"
@@ -34,4 +32,5 @@ mcrcon -H $MC_SERVER -P $MC_RCON_PORT -p $MC_RCON_PWD save-on
 
 # Cleaning up files older than X days
 echo "Cleaning up backups older than $KEEPDAYS days"
-find /data/to -maxdepth 0 -mtime +$KEEPDAYS -delete
+let KEEPMIN=$KEEPDAYS*1440 # minutes in a day times number of days
+find /data/to/$WORLD-backup* -maxdepth 0 -mmin +$KEEPMIN -delete

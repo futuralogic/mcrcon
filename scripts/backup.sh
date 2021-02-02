@@ -9,7 +9,7 @@ BACKUP_FILENAME="${WORLD}-backup-$(date '+%F-%H-%M-%S').zip"
 MC_SERVER=$RCON_SERVER
 MC_RCON_PORT=$RCON_PORT
 MC_RCON_PWD=$RCON_PASS
-KEEPDAYS=$KEEP_DAYS
+KEEPMIN=$KEEP_MIN
 
 echo "Switching to world folder"
 cd $CWD
@@ -31,6 +31,5 @@ echo "Renabling MC automatic save"
 mcrcon -H $MC_SERVER -P $MC_RCON_PORT -p $MC_RCON_PWD save-on
 
 # Cleaning up files older than X days
-echo "Cleaning up backups older than $KEEPDAYS days"
-let KEEPMIN=$KEEPDAYS*1440 # minutes in a day times number of days
+echo "Cleaning up backups older than $KEEPMIN minute(s)"
 find /data/to/$WORLD-backup* -maxdepth 0 -mmin +$KEEPMIN -delete
